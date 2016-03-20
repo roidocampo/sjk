@@ -8,7 +8,7 @@ from .install import kernels
 
 def uninstall_kernelspecs(target_dir):
     for name, mod in kernels:
-        kernel_dir = os.path.join(target_dir, "kernels", "cas-" + mod)
+        kernel_dir = os.path.join(target_dir, "kernels", "cas" + mod)
         if os.path.exists(kernel_dir):
             try:
                 shutil.rmtree(kernel_dir)

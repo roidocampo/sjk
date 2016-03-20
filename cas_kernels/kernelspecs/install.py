@@ -33,7 +33,7 @@ def install_kernelspecs(target_dir):
                 os.path.abspath(__file__))))
     image_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images")
     for name, mod in kernels:
-        kernel_dir = os.path.join(target_dir, "kernels", "cas-" + mod)
+        kernel_dir = os.path.join(target_dir, "kernels", "cas" + mod)
         if os.path.exists(kernel_dir):
             try:
                 shutil.rmtree(kernel_dir)
