@@ -56,9 +56,9 @@ class MathematicaKernel(CasKernel):
     language = 'mathematica'
     language_version = '10'
     language_info = dict(
-        mimetype = 'text/x-c',
+        mimetype = 'text/x-mathematica',
         file_extension = 'm',
-        codemirror_mode = 'clike',
+        codemirror_mode = 'mathematica',
         name = 'mathematica'
     )
     banner = "Mathematica"
