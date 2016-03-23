@@ -26,11 +26,7 @@ kernels = [
     ("Mathematica", "mathematica"),
 ]
 
-def install_kernelspecs(target_dir):
-    python_path = os.path.dirname(
-        os.path.dirname(
-            os.path.dirname(
-                os.path.abspath(__file__))))
+def install_kernelspecs(target_dir, python_path):
     image_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images")
     for name, mod in kernels:
         kernel_dir = os.path.join(target_dir, "kernels", "cas" + mod)
@@ -100,22 +96,34 @@ def link_sage_nbextensions(target_dir):
 
 def main():
     if len(sys.argv) == 1:
-        target_dir = os.path.join(
-            os.path.expanduser("~"), 
-            "Library", 
-            "Jupyter")
-    elif len(sys.argv) != 2:
+        target_dir = ""
+        python_path = ""
+    elif len(sys.argv) == 2:
+        target_dir = sys.argv[1]
+        python_path = ""
+    elif len(sys.argv) != 3:
         print("Error: wrong arguments.")
         return
     else:
         target_dir = sys.argv[1]
+        python_path = sys.argv[2]
+    if target_dir == "":
+        target_dir = os.path.join(
+            os.path.expanduser("~"), 
+            "Library", 
+            "Jupyter")
+    if python_path == "":
+        python_path = os.path.dirname(
+            os.path.dirname(
+                os.path.dirname(
+                    os.path.abspath(__file__))))
     try: 
         os.makedirs(target_dir)
     except OSError:
         if not os.path.isdir(target_dir):
             print("Error: cannot install.")
             return
-    install_kernelspecs(target_dir)
+    install_kernelspecs(target_dir, python_path)
     link_sage_kernelspec(target_dir)
     link_sage_nbextensions(target_dir)
 

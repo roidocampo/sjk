@@ -43,15 +43,17 @@ def unlink_sage_nbextensions(target_dir):
 
 def main():
     if len(sys.argv) == 1:
-        target_dir = os.path.join(
-            os.path.expanduser("~"), 
-            "Library", 
-            "Jupyter")
+        target_dir = ""
     elif len(sys.argv) != 2:
         print("Error: wrong arguments.")
         return
     else:
         target_dir = sys.argv[1]
+    if target_dir == "":
+        target_dir = os.path.join(
+            os.path.expanduser("~"), 
+            "Library", 
+            "Jupyter")
     if not os.path.isdir(target_dir):
         return
     uninstall_kernelspecs(target_dir)
