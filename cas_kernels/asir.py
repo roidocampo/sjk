@@ -11,7 +11,7 @@ class AsirConfig(CasConfig):
     prompt_char = u"\u2192"
     prompt_cmd = "print(\"{}\",2)$".format(prompt_char.encode("utf8"))
     cmd = \
-        [ "/Applications/cfep.app/OpenXM/bin/asir"
+        [ "asir"
          , "-quiet"
          ]
     initial_input = prompt_cmd + "\n"

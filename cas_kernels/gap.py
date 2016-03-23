@@ -11,8 +11,7 @@ class GapConfig(CasConfig):
     prompt_char = u"\u2192"
     prompt_cmd = "Print(\"{}\");".format(prompt_char.encode("utf8"))
     cmd = \
-        [ "sage"
-         , "-gap"
+        [ "gap"
          , "-q"
          , "-n"
          , "-T"
