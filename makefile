@@ -23,6 +23,8 @@ install-module:
 install-kernels-global:
 	python -m cas_kernels.kernelspecs.install "${TARGET_DIR}" "${MODULE_BASEDIR}"
 
+link-sage-kernel:
+	python -m cas_kernels.kernelspecs.link_sage "${TARGET_DIR}" "${MODULE_BASEDIR}"
 
 uninstall: uninstall-module uninstall-kernels-global
 
