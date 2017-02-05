@@ -8,7 +8,7 @@ kernelspec_template = """
 {{
     "display_name": "{kernel_name}",
     "argv": [
-        "python2",
+        "{python_exec}",
         "-m", "cas_kernels.{module_name}", 
         "-f", "{{connection_file}}"
     ],
@@ -47,6 +47,7 @@ def install_kernelspecs(target_dir, python_path):
             fo.write(kernelspec_template.format(
                 kernel_name = name,
                 module_name = mod,
+                python_exec = sys.executable,
                 python_path = python_path
             ))
         for ext in [ "-128x128.png", "-64x64.png"]:
