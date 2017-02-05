@@ -8,7 +8,7 @@ kernelspec_template = """
 {{
     "display_name": "{kernel_name}",
     "argv": [
-        "python",
+        "python2",
         "-m", "cas_kernels.{module_name}", 
         "-f", "{{connection_file}}"
     ],
