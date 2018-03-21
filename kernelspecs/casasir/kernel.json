@@ -1,0 +1,8 @@
+{
+    "display_name": "Risa/Asir",
+    "argv": [
+        "python",
+        "-m", "cas_kernels.asir", 
+        "-f", "{connection_file}"
+    ]
+}

@@ -7,8 +7,8 @@ from .cas_kernel import CasKernel, CasConfig
 
 class MathematicaConfig(CasConfig):
 
-    prompt_char = u"\u2192"
-    output_separator = u"\u0001"
+    prompt_char = "\u2192"
+    output_separator = "\u0001"
     prompt_cmd = ""
     cmd = \
         [ "mathematica"

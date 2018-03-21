@@ -11,9 +11,9 @@ from ipykernel.kernelbase import Kernel
 
 class CasConfig(object):
 
-    prompt_char = u"\u2192"
+    prompt_char = "\u2192"
     output_separator = None
-    prompt_cmd = "\"{}\"\n".format(prompt_char.encode("utf8"))
+    prompt_cmd = "\"{}\"\n".format(prompt_char)
     cmd = [ "bc" , "--quiet" ]
     initial_input = prompt_cmd
     use_intermediate_file = False
@@ -44,7 +44,13 @@ class CasKernel(Kernel):
     implementation_version = '1.0'
     language = 'bc'
     language_version = '0.1'
-    language_info = {'mimetype': 'text/plain'}
+    language_info = dict(
+        name = 'bc',
+        mimetype = 'text/plain',
+        file_extesnion = 'txt',
+        codemirror_mode = 'plain',
+        pygments_lexer = 'bc'
+    )
     banner = "bc - An arbitrary precision calculator language"
 
     cas_config = CasConfig
@@ -124,7 +130,9 @@ class REPL(object):
         self.child = subprocess.Popen(self.config.cmd, 
                                       stdin=subprocess.PIPE,
                                       stdout=subprocess.PIPE,
-                                      stderr=subprocess.STDOUT)
+                                      stderr=subprocess.STDOUT,
+                                      encoding="utf8",
+                                      errors="replace")
         atexit.register(self.child.kill)
 
         # start main loop
@@ -144,7 +152,7 @@ class REPL(object):
     @staticmethod
     def repl(config, child, inqueue, outqueue, status):
         # initialize child
-        status.value = "initializing"
+        status.value = b"initializing"
         if config.initial_input is not None:
             child.stdin.write(config.initial_input)
             child.stdin.flush()
@@ -152,28 +160,21 @@ class REPL(object):
         # main loop
         while True:
             if not REPL.read_output(config, child, outqueue):
-                status.value = "exited"
+                status.value = b"exited"
                 break
-            status.value = "awaiting input"
+            status.value = b"awaiting input"
             REPL.feed_child(config, child, inqueue, outqueue)
-            status.value = "reading output"
+            status.value = b"reading output"
 
     @staticmethod
     def read_output(config, child, outqueue):
-        raw_output = ""
         output = [""]
         idx = 0
         while True:
             c = child.stdout.read(1)
             if not c:
                 return False
-            raw_output += c
-            try:
-                intermediate_output = raw_output.decode("utf8")
-            except:
-                continue
-            output[idx] += intermediate_output
-            raw_output = ""
+            output[idx] += c
             if output[idx][-1] == config.prompt_char:
                 output[idx] = output[idx][:-1]
                 break
@@ -205,7 +206,7 @@ class REPL(object):
             else:
                 outqueue.put((config.input_num, False, err))
         if config.use_intermediate_file:
-            config.intermediate_file = tempfile.NamedTemporaryFile()
+            config.intermediate_file = tempfile.NamedTemporaryFile('w+')
             config.intermediate_file.write( code )
             config.intermediate_file.flush()
         child.stdin.write(config.input_cmd(

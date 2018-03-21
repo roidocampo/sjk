@@ -8,8 +8,8 @@ from .syntax import gap as gap_syntax
 
 class GapConfig(CasConfig):
 
-    prompt_char = u"\u2192"
-    prompt_cmd = "Print(\"{}\");".format(prompt_char.encode("utf8"))
+    prompt_char = "\u2192"
+    prompt_cmd = "Print(\"{}\");".format(prompt_char)
     cmd = \
         [ "gap"
          , "-q"

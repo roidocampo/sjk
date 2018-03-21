@@ -8,8 +8,8 @@ from .syntax import asir as asir_syntax
 
 class AsirConfig(CasConfig):
 
-    prompt_char = u"\u2192"
-    prompt_cmd = "print(\"{}\",2)$".format(prompt_char.encode("utf8"))
+    prompt_char = "\u2192"
+    prompt_cmd = "print(\"{}\",2)$".format(prompt_char)
     cmd = \
         [ "asir"
          , "-quiet"

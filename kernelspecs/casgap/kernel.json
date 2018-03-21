@@ -1,0 +1,8 @@
+{
+    "display_name": "GAP",
+    "argv": [
+        "python",
+        "-m", "cas_kernels.gap", 
+        "-f", "{connection_file}"
+    ]
+}

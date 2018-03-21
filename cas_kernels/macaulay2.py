@@ -8,7 +8,7 @@ from .cas_kernel import CasKernel, CasConfig
 
 class Macaulay2Config(CasConfig):
 
-    prompt_char = u"\u2192"
+    prompt_char = "\u2192"
     prompt_cmd = "<< utf8 {} << flush;".format(ord(prompt_char))
     cmd = \
         [ "M2"

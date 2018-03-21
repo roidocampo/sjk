@@ -8,8 +8,8 @@ from .syntax import singular as singular_syntax
 
 class SingularConfig(CasConfig):
 
-    prompt_char = u"\u2192"
-    prompt_cmd = "print(\"{}\");".format(prompt_char.encode("utf8"))
+    prompt_char = "\u2192"
+    prompt_cmd = "print(\"{}\");".format(prompt_char)
     cmd = \
         [ "singular"
         , "--quiet"
@@ -36,17 +36,18 @@ class SingularKernel(CasKernel):
     language = 'singular'
     language_version = '4.0.1' # not really, no
     language_info = dict(
+        name = 'singular',
         mimetype = 'text/x-c',
         file_extension = 'sing',
         codemirror_mode = 'clike',
-        name = 'singular'
+        pygments_lexer = 'c'
     )
     banner = textwrap.dedent(
     """\
                          SINGULAR                                 /
      A Computer Algebra System for Polynomial Computations       /
                                                                0<
-     by: W. Decker, G.-M. Greuel, G. Pfister, H. Schoenemann     \
+     by: W. Decker, G.-M. Greuel, G. Pfister, H. Schoenemann     \\
     FB Mathematik der Universitaet, D-67653 Kaiserslautern        \\
     """)
     help_links = [{

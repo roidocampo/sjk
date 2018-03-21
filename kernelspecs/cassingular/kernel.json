@@ -1,0 +1,8 @@
+{
+    "display_name": "Singular",
+    "argv": [
+        "python",
+        "-m", "cas_kernels.singular", 
+        "-f", "{connection_file}"
+    ]
+}
