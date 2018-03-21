@@ -2,7 +2,7 @@
     "display_name": "Mathematica",
     "argv": [
         "python",
-        "-m", "cas_kernels.mathematica", 
+        "-m", "sjk.mathematica", 
         "-f", "{connection_file}"
     ]
 }

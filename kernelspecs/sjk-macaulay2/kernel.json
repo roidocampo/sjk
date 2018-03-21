@@ -2,7 +2,7 @@
     "display_name": "Macaulay 2",
     "argv": [
         "python",
-        "-m", "cas_kernels.macaulay2", 
+        "-m", "sjk.macaulay2", 
         "-f", "{connection_file}"
     ]
 }

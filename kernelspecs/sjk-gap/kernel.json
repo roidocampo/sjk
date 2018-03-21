@@ -1,8 +1,8 @@
 {
-    "display_name": "Singular",
+    "display_name": "GAP",
     "argv": [
         "python",
-        "-m", "cas_kernels.singular", 
+        "-m", "sjk.gap", 
         "-f", "{connection_file}"
     ]
 }

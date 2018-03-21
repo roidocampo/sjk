@@ -2,7 +2,7 @@
     "display_name": "Risa/Asir",
     "argv": [
         "python",
-        "-m", "cas_kernels.asir", 
+        "-m", "sjk.asir", 
         "-f", "{connection_file}"
     ]
 }

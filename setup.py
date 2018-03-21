@@ -1,32 +1,78 @@
-
 from setuptools import setup, find_packages
+from os import path, walk
 
+########################################################################
+# BASIC PACKAGE METADATA
+########################################################################
 
-def get_data_files():
-    from os import listdir
-    from os.path import join, isdir, isfile
+sargs = dict(
+
+    name             = 'sjk',
+    version          = '0.3.0',
+    description      = 'SJK: Some Jupyter Kernels.',
+    author           = 'Roi Docampo',
+    url              = 'https://github.com/roidocampo/sjk',
+    license          = 'MIT',
+    install_requires = [ 'ipykernel' ],
+    python_requires  = ">=3.5",
+
+)
+
+########################################################################
+# LONG DESCRIPTION
+########################################################################
+
+here = path.abspath(path.dirname(__file__))
+
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    sargs['long_description'] = f.read()
+
+########################################################################
+# CLASSIFIERS
+########################################################################
+
+classifiers = """\
+
+Development Status :: 4 - Beta
+Framework :: Jupyter
+Intended Audience :: Developers
+Intended Audience :: Science/Research
+License :: OSI Approved :: MIT License
+Programming Language :: Python :: 3
+Programming Language :: Python :: 3.5
+Programming Language :: Python :: 3.6
+Topic :: Scientific/Engineering
+Topic :: Software Development
+
+"""
+
+sargs['classifiers'] = [ c for c in classifiers.split("\n") if c ]
+
+########################################################################
+# PYTHON MODULES
+########################################################################
+
+sargs['packages'] = find_packages()
+
+########################################################################
+# DATA FILES
+########################################################################
+
+def data_files(src_root, dest_root):
     data = []
-    root = "kernelspecs"
-    dest_dir = join("share", "jupyter", "kernels")
-    for folder in listdir(root):
-        folder_path = join(root, folder)
-        if not isdir(folder_path):
-            continue
-        target_dir = join(dest_dir, folder)
-        files = []
-        for file in listdir(folder_path):
-            file_path = join(folder_path, file)
-            if isfile(file_path):
-                files.append(file_path)
-        data.append((target_dir, files))
+    src_len = len(src_root)
+    for src_dir, subdirs, files in walk(src_root):
+        if files:
+            rel_dir = src_dir[src_len:]
+            dest_dir = dest_root + rel_dir
+            files = [ path.join(src_dir, f) for f in files ]
+            data.append((dest_dir, files))
     return data
 
+sargs['data_files'] = data_files('kernelspecs', 'share/jupyter/kernels')
 
-setup(
-    name             = 'jupyter-cas-kernels',
-    version          = '0.2.0',
-    description      = 'Some kernels for Jupyter',
-    install_requires = [ 'ipykernel' ],
-    packages         = find_packages(exclude=['contrib', 'docs', 'tests']),  #
-    data_files       = get_data_files()
-)
+########################################################################
+# RUN SETUP
+########################################################################
+
+setup(**sargs)
