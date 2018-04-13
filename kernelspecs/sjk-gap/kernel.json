@@ -1,7 +1,7 @@
 {
     "display_name": "GAP",
     "argv": [
-        "python",
+        "python3",
         "-m", "sjk.gap", 
         "-f", "{connection_file}"
     ]

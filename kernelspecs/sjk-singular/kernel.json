@@ -1,7 +1,7 @@
 {
     "display_name": "Singular",
     "argv": [
-        "python",
+        "python3",
         "-m", "sjk.singular", 
         "-f", "{connection_file}"
     ]

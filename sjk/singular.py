@@ -11,7 +11,7 @@ class SingularConfig(CasConfig):
     prompt_char = "\u2192"
     prompt_cmd = "print(\"{}\");".format(prompt_char)
     cmd = \
-        [ "singular"
+        [ "Singular"
         , "--quiet"
         , "--no-tty"
         , "-c", "option(noprompt);" + prompt_cmd
