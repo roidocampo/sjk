@@ -1,6 +1,7 @@
 
 import json
 import re
+import textwrap
 
 from .cas_kernel import CasKernel, CasConfig
 
@@ -35,7 +36,9 @@ class Macaulay2Config(CasConfig):
         out_lines = output.splitlines()
         if len(out_lines) > 2 and out_lines[-2] == "":
             out_lines[-1] = re.sub("^\s*o\d*\s*:\s*","",out_lines[-1])
-            output = "\n".join(out_lines)
+        while out_lines and out_lines[0] == "" or out_lines[0].isspace():
+            out_lines.pop(0)
+        output = "\n".join(out_lines)
         return output
 
 
@@ -51,7 +54,14 @@ class Macaulay2Kernel(CasKernel):
         codemirror_mode = 'plain',
         name = 'macaulay2'
     )
-    banner = "Macaulay2"
+    banner = textwrap.dedent(
+    """\
+    ┌────────────────────────────────────────────────────────────────────┐
+    │ Macaulay2                                                          │
+    │ A software system for research in algebraic geometry               │
+    │ by: Daniel Grayson, Michael Stillman                               │
+    └────────────────────────────────────────────────────────────────────┘\
+    """)
     help_links = [{
         'text': 'Macaulay2 Documentation', 
         'url': 'http://www.math.uiuc.edu/Macaulay2/doc/Macaulay2-1.8.1/share/doc/Macaulay2/Macaulay2Doc/html/'

@@ -37,18 +37,20 @@ class SingularKernel(CasKernel):
     language_version = '4.0.1' # not really, no
     language_info = dict(
         name = 'singular',
-        mimetype = 'text/x-c',
+        mimetype = 'text/x-singular',
         file_extension = 'sing',
         codemirror_mode = 'clike',
-        pygments_lexer = 'c'
+        pygments_lexer = 'singular'
     )
     banner = textwrap.dedent(
     """\
-                         SINGULAR                                 /
-     A Computer Algebra System for Polynomial Computations       /
-                                                               0<
-     by: W. Decker, G.-M. Greuel, G. Pfister, H. Schoenemann     \\
-    FB Mathematik der Universitaet, D-67653 Kaiserslautern        \\
+    ┌────────────────────────────────────────────────────────────────────┐
+    │                      SINGULAR                                 /    │
+    │  A Computer Algebra System for Polynomial Computations       /     │
+    │                                                            0<      │
+    │  by: W. Decker, G.-M. Greuel, G. Pfister, H. Schoenemann     \\     │
+    │ FB Mathematik der Universitaet, D-67653 Kaiserslautern        \\    │
+    └────────────────────────────────────────────────────────────────────┘\
     """)
     help_links = [{
         'text': 'Singular Manual', 

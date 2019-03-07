@@ -23,7 +23,7 @@ class CasConfig(object):
 
     @classmethod
     def syntaxchecker(cls, code):
-        return (True, code.strip(), None)
+        return ("complete", code.strip(), None)
 
     @classmethod
     def input_cmd(cls, input_num, code, intermediate_file):
@@ -64,6 +64,10 @@ class CasKernel(Kernel):
         msg = "[debug] {}\n".format(repr(msg))
         stream_content = {'name': 'stdout', 'text': msg}
         self.send_response(self.iopub_socket, 'stream', stream_content)
+
+    def do_is_complete(self, code):
+        status, clean_code, err = self.cas_config.syntaxchecker(code)
+        return { 'status': status }
 
     def do_execute(self, code, silent, store_history=True, user_expressions=None,
                    allow_stdin=False):
@@ -200,8 +204,8 @@ class REPL(object):
     def feed_child(config, child, inqueue, outqueue):
         while True:
             config.input_num, raw_code = inqueue.get()
-            check, code, err = config.syntaxchecker(raw_code)
-            if check:
+            status, code, err = config.syntaxchecker(raw_code)
+            if status == "complete":
                 break
             else:
                 outqueue.put((config.input_num, False, err))

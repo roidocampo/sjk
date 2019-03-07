@@ -68,17 +68,17 @@ def check_balanced(s):
 
       elif c=="}":
         if len(par_state)==0 or par_state[-1]!="{":
-          return False
+          return "invalid"
         par_state = par_state[:-1]
 
       elif c==")":
         if len(par_state)==0 or par_state[-1]!="(":
-          return False
+          return "invalid"
         par_state = par_state[:-1]
 
       elif c=="]":
         if len(par_state)==0 or par_state[-1]!="[":
-          return False
+          return "invalid"
         par_state = par_state[:-1]
 
       else:
@@ -86,14 +86,17 @@ def check_balanced(s):
         half_multiline_comment_marker = False
 
   if string_mode or multiline_comment_mode or len(par_state)>0:
-    return False
+    return "incomplete"
   else:
-    return True
+    return "complete"
 
 def check(s):
-  if not check_balanced(s):
-    return (False, s, "error: unbalanced expression")
+  status = check_balanced(s)
+  if status == "incomplete":
+    return (status, s, "error: unbalanced expression")
+  elif status == "invalid":
+    return (status, s, "error: unbalanced expression")
   s = s.rstrip()
   if len(s) == 0 or s[-1] != ";":
-    return (False, s, "error: missing semicolon")
-  return (True, s, None)
+    return ("incomplete", s, "error: missing semicolon")
+  return ("complete", s, None)
