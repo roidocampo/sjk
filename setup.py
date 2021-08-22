@@ -26,6 +26,7 @@ here = path.abspath(path.dirname(__file__))
 
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     sargs['long_description'] = f.read()
+    sargs['long_description_content_type'] = 'text/x-rst'
 
 ########################################################################
 # CLASSIFIERS
