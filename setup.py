@@ -8,7 +8,7 @@ from os import path, walk
 sargs = dict(
 
     name             = 'sjk',
-    version          = '0.5',
+    version          = '0.5.1',
     description      = 'SJK: Some Jupyter Kernels.',
     author           = 'Roi Docampo',
     url              = 'https://github.com/roidocampo/sjk',
