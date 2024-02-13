@@ -83,11 +83,11 @@ class CasKernel(Kernel):
             elif not ok:
                 self._debug_(("ERROR", outputs))
                 msg = {'status': 'error', 'execution_count': ex_count,
-                        'ename': 'cas-error', 'evalue': 'cas-error', 
+                        'ename': 'cas-error', 'evalue': 'cas-error',
                         'traceback': [outputs]}
                 self.send_response(self.iopub_socket, "error", msg)
                 return {'status': 'error', 'execution_count': ex_count,
-                        'ename': 'cas-error', 'evalue': 'cas-error', 
+                        'ename': 'cas-error', 'evalue': 'cas-error',
                         'traceback': [outputs]}
             else:
                 #self._debug_(self.process_outputs(outputs))
@@ -119,7 +119,7 @@ class CasKernel(Kernel):
                 proc_outs.append(('display_data', mess))
         return proc_outs
 
- 
+
 ###########################################################################
 
 class REPL(object):
@@ -130,33 +130,32 @@ class REPL(object):
             self.start()
 
     def start(self):
-        # start child
-        self.child = subprocess.Popen(self.config.cmd, 
-                                      stdin=subprocess.PIPE,
-                                      stdout=subprocess.PIPE,
-                                      stderr=subprocess.STDOUT,
-                                      encoding="utf8",
-                                      errors="replace")
-        atexit.register(self.child.kill)
-
         # start main loop
         self.inqueue = multiprocessing.Queue()
         self.outqueue = multiprocessing.Queue()
         self.status = multiprocessing.Array('c', 100)
         self.proc = multiprocessing.Process(
-            target = self.repl,
+            target = REPL.repl,
             args = (self.config,
-                    self.child,
-                    self.inqueue, 
-                    self.outqueue, 
+                    self.inqueue,
+                    self.outqueue,
                     self.status))
         self.proc.daemon = True
         self.proc.start()
 
     @staticmethod
-    def repl(config, child, inqueue, outqueue, status):
-        # initialize child
+    def repl(config, inqueue, outqueue, status):
+        # start and initialize child
         status.value = b"initializing"
+
+        child = subprocess.Popen(config.cmd,
+                                 stdin=subprocess.PIPE,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.STDOUT,
+                                 encoding="utf8",
+                                 errors="replace")
+        atexit.register(child.kill)
+
         if config.initial_input is not None:
             child.stdin.write(config.initial_input)
             child.stdin.flush()
@@ -189,7 +188,7 @@ class REPL(object):
         if len(output[0])>0 and output[0][0]=="\n":
             output[0] = output[0][1:]
         if config.input_num != None:
-            output[0] = config.output_filter(config.input_num, 
+            output[0] = config.output_filter(config.input_num,
                                              output[0],
                                              config.intermediate_file)
             outqueue.put((config.input_num, True, output))

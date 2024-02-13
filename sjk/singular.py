@@ -53,7 +53,7 @@ class SingularKernel(CasKernel):
     └────────────────────────────────────────────────────────────────────┘\
     """)
     help_links = [{
-        'text': 'Singular Manual', 
+        'text': 'Singular Manual',
         'url': 'http://www.singular.uni-kl.de/Manual/latest/index.htm'
     }]
 
